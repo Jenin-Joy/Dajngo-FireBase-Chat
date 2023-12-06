@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="path/to/your/css/styles.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+    .par-card{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .head-sec {
+        width: 840px;
+        background-color: #6c8cfc;
+        padding: 17px;
+        border-radius: 10px;
+        border-bottom: 1px solid white;
+        margin-left: 8px;
+        margin-top: 8px;
+        display: flex;
+        gap: 10px;
+    }
+    .con-card {
+        width: 840px;
+        padding: 24px;
+        border-radius: 10px;
+        background-color: transparent;
+        min-height: 520px;
+    }
+    .message-card {
+        padding: 24px;
+        /* border-radius: 10px; */
+        border-top: 1px solid white;
+    }
+    .message-box {
+        padding: 10px;
+        width: 750px;
+        margin-left: 5px;
+        border: none;
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+    .chat-card {
+        /* background-color: #3f32f41c; */
+        padding: 10px;
+        box-shadow: 0 0 33px;
+        border-radius: 10px;
+    }
+    .btn {
+        background-color: transparent;
+        border: none;
+    }
+    .ic-size {
+        font-size: 20px;
+        color: #6c8cfc;
+    }
+    .font {
+        color: white;
+        font-size: 20px;
+        font-family: Poor Richard;
+    }
+    .r-mess {
+        padding: 5px;
+        background-color: #BBDEFB;
+        border-radius: 10px;
+        max-width: 555px;
+        width: fit-content;
+    }
+    .s-mess {
+        padding: 5px;
+        background-color: #90caf9;
+        border-radius: 10px;
+        max-width: 555px;
+        width: fit-content;
+    }
+    .par-r-mess {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-bottom: 5px;
+    }
+    .par-s-mess {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 5px;
+        align-items: flex-end;
+    }
+    .s-time {
+        padding: 2px;
+        font-size: 9px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .r-time {
+        padding: 2px;
+        font-size: 9px;
+    }
+    .con-width {
+        min-width: 35px;
+    }
+    .scroll-con {
+        overflow-y: scroll;
+        height: 581px;
+    }
+    .scroll-con::-webkit-scrollbar {
+      display: none;
+    }
+</style>
+<body onload="scroll()">
+    <div class="par-card">
+        <div class="chat-card">
+            <div class="head-sec" id="changeable">
+                <div>
+                    <img src="https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Hyundai-Grand-i10-Nios-200120231541.jpg&w=872&h=578&q=75&c=1" width="40px" height="40px" style="border-radius: 50%;" alt="">
+                </div>
+                <div class="font">
+                    {{user.user_name}}
+                    <input type="hidden" name="txt_id" id="txt_id" value="{{tid}}">
+                </div>
+            </div>
+           <div class="scroll-con" id="sc-down">
+            <div class="con-card" id="conversation">
+                <!-- <div class="par-r-mess">
+                    <div class="r-mess">
+                        <div class="con-width">
+                            Hais k j dnsk jvkz dvk zd fksd fk s dfkns dfk gjne fkej fnkj gnk jdfn gkj dfk df ksd kjl asfn gkj snd fkj sng kj
+                        </div>
+                        <div class="r-time">7.00 pm</div>
+                    </div>
+                </div>
+                <div class="par-s-mess">
+                    <div class="s-mess">
+                        <div class="con-width">
+                            Hais k j dnsk jvkz dvk zd fksd fk s dfkns dfk gjne fkej fnkj gnk jdfn gkj dfk df ksd kjl asfn gkj snd fkj sng kj
+                        </div>
+                        <div class="s-time">7.00 pm</div>
+                    </div>
+                </div>
+                <div class="par-r-mess">
+                    <div class="r-mess">
+                        <div class="con-width">
+                            Hais k j dnsk jvkz dvk zd fksd fk s dfkns dfk gjne fkej fnkj gnk jdfn gkj dfk df ksd kjl asfn gkj snd fkj sng kj
+                        </div>
+                        <div class="r-time">7.00 pm</div>
+                    </div>
+                </div>
+                <div class="par-s-mess">
+                    <div class="s-mess">
+                        <div class="con-width">
+                            <img src="https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Hyundai-Grand-i10-Nios-200120231541.jpg&w=872&h=578&q=75&c=1" width="250px" height="250px" style="border-radius: 5%;" alt="">
+                        </div>
+                        <div class="s-time">7.00 pm</div>
+                    </div>
+                </div>
+                <div class="par-r-mess">
+                    <div class="r-mess">
+                        <div class="con-width">
+                            <img src="https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Hyundai-Grand-i10-Nios-200120231541.jpg&w=872&h=578&q=75&c=1" width="250px" height="250px" style="border-radius: 5%;" alt="">
+                        </div>
+                        <div class="r-time">7.00 pm</div>
+                    </div>
+                </div> -->
+            </div>
+           </div>
+            <div class="message-card">
+                <label for="photo_data">
+                    <i class="fas fa-paperclip ic-size"></i>
+                </label>
+                <input type="file" name="photo_data" id="photo_data" style="display: none;" onchange="sendChat('{{tid}}')">
+                <input type="text" name="txt_msg" class="message-box" id="txt_msg" placeholder="Type your message..." autocomplete="off">
+                <button class="btn" type="submit" onclick="sendChat('{{tid}}')"><i class="fas fa-paper-plane ic-size"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Check if this cookie string begins with the name we want
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+    function sendChat(tid) {
+        var msg = document.getElementById("txt_msg").value;
+        var fileInput = document.getElementById("photo_data");
+        var file = fileInput.files[0];
+        var fd = new FormData()
+        fd.append("file",file)
+        fd.append("tid",tid)
+        fd.append("msg",msg)
+        var ur = "{% url 'webuser:ajaxchat' %}"
+        var csrftoken = getCookie('csrftoken');
+        $.ajax({
+            type:'POST',
+            url: ur,
+            data: fd,
+            processData: false,
+            contentType: false,
+            headers: { "X-CSRFToken": csrftoken }, // Include CSRF token in headers
+            success: function (data) {
+                   // $("#selplace").html(data);
+                document.getElementById('txt_msg').value = "" 
+                document.getElementById("photo_data").value = ""
+                $('#sc-down').animate({scrollTop: $('#sc-down')[0].scrollHeight});
+                var element = document.getElementById("sc-down");
+                element.scrollTop = element.scrollHeight - element.clientHeight;
+            },
+        });
+    };
+
+    function scroll(){
+        $('#sc-down').animate({scrollTop: $('#sc-down')[0].scrollHeight});
+        var element = document.getElementById("sc-down");
+        element.scrollTop = element.scrollHeight - element.clientHeight;
+    }
+
+    function viewChat() {
+        var id = document.getElementById("txt_id").value
+        var ur = "{% url 'webuser:ajaxchatview' %}"
+        $.ajax({
+            url: ur,
+            data: { tid: id, },
+            success: function (data) {
+                $("#conversation").html(data);
+                console.log(data);
+            }
+        });
+    };
+
+    viewChat()
+    setInterval(viewChat,800)
+</script>
