@@ -129,3 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 cred = credentials.Certificate('DB\django-firebase-chat-6fbd8-firebase-adminsdk-r429q-5c3f0ac739.json')
 app = firebase_admin.initialize_app(cred,{'storageBucket':'django-firebase-chat-6fbd8.appspot.com'})
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'digitalmt007@gmail.com'
+EMAIL_HOST_PASSWORD = 'yokejzlcirkutnvu'
