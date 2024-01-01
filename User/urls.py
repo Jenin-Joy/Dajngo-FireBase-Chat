@@ -6,4 +6,5 @@ urlpatterns = [
     path('chat/<str:id>',views.chat,name="chat"),
     path('ajaxchat/',views.ajaxchat,name="ajaxchat"),
     path('ajaxchatview/',views.ajaxchatview,name="ajaxchatview"),
+    path('deleteaccount/',views.deleteaccount,name="deleteaccount"),
 ]

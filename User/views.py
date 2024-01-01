@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import firebase_admin
 from firebase_admin import storage,auth,firestore,credentials
 import pyrebase
@@ -57,3 +57,15 @@ def ajaxchatview(request):
         if ((cdata["user_from"] == request.session["uid"]) | (cdata["user_to"] == request.session["uid"])) & ((cdata["user_from"] == tid) | (cdata["user_to"] == tid)):
             data.append(cdata)
     return render(request,"User/ChatView.html",{"data":data,"tid":tid})
+
+def deleteaccount(request):
+    account = db.collection("tbl_user").document(request.session["uid"]).get().to_dict()
+    firebase_admin.auth.delete_user(account["user_id"])
+    chatf = db.collection("tbl_chat").where("user_from", "==", request.session["uid"]).stream()
+    for cf in chatf:
+        cf.reference.delete()
+    chatt = db.collection("tbl_chat").where("user_to", "==", request.session["uid"]).stream()
+    for ct in chatt:
+        ct.reference.delete()
+    db.collection("tbl_user").document(request.session["uid"]).delete()
+    return render(request,"Guest/Login.html",{"msg":"Account Deleted Sucerssfully...."})
