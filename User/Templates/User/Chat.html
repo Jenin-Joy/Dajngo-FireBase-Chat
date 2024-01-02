@@ -33,6 +33,23 @@
         color:white;
         font-size: 20px;
     }
+    .option-content {
+        width: 115px;
+        padding: 10px;
+        background-color: #90caf9;
+        border-radius: 10px;
+        position: absolute;
+        left: 1036px;
+        margin-top: 4px;
+        display: none;
+        transition: transform 3.9s ease-in-out;
+    }
+    .option-selection {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        align-items: center;
+    }
     .con-card {
         width: 840px;
         padding: 24px;
@@ -118,8 +135,113 @@
     .scroll-con::-webkit-scrollbar {
       display: none;
     }
+
+
+    .sk-folding-cube {
+        margin: 20px auto;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: rotateZ(45deg);
+                transform: rotateZ(45deg);
+    }
+
+    .sk-folding-cube .sk-cube {
+        float: left;
+        width: 50%;
+        height: 50%;
+        position: relative;
+        -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+                transform: scale(1.1); 
+    }
+    .sk-folding-cube .sk-cube:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #333;
+        -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+                animation: sk-foldCubeAngle 2.4s infinite linear both;
+        -webkit-transform-origin: 100% 100%;
+            -ms-transform-origin: 100% 100%;
+                transform-origin: 100% 100%;
+    }
+    .sk-folding-cube .sk-cube2 {
+        -webkit-transform: scale(1.1) rotateZ(90deg);
+                transform: scale(1.1) rotateZ(90deg);
+    }
+    .sk-folding-cube .sk-cube3 {
+        -webkit-transform: scale(1.1) rotateZ(180deg);
+                transform: scale(1.1) rotateZ(180deg);
+    }
+    .sk-folding-cube .sk-cube4 {
+        -webkit-transform: scale(1.1) rotateZ(270deg);
+                transform: scale(1.1) rotateZ(270deg);
+    }
+    .sk-folding-cube .sk-cube2:before {
+        -webkit-animation-delay: 0.3s;
+                animation-delay: 0.3s;
+    }
+    .sk-folding-cube .sk-cube3:before {
+        -webkit-animation-delay: 0.6s;
+                animation-delay: 0.6s; 
+    }
+    .sk-folding-cube .sk-cube4:before {
+        -webkit-animation-delay: 0.9s;
+                animation-delay: 0.9s;
+    }
+    @-webkit-keyframes sk-foldCubeAngle {
+        0%, 10% {
+            -webkit-transform: perspective(140px) rotateX(-180deg);
+                    transform: perspective(140px) rotateX(-180deg);
+            opacity: 0; 
+        } 25%, 75% {
+            -webkit-transform: perspective(140px) rotateX(0deg);
+                    transform: perspective(140px) rotateX(0deg);
+            opacity: 1; 
+        } 90%, 100% {
+            -webkit-transform: perspective(140px) rotateY(180deg);
+                    transform: perspective(140px) rotateY(180deg);
+            opacity: 0; 
+        } 
+    }
+
+    @keyframes sk-foldCubeAngle {
+        0%, 10% {
+            -webkit-transform: perspective(140px) rotateX(-180deg);
+                    transform: perspective(140px) rotateX(-180deg);
+            opacity: 0; 
+        } 25%, 75% {
+            -webkit-transform: perspective(140px) rotateX(0deg);
+                    transform: perspective(140px) rotateX(0deg);
+            opacity: 1; 
+        } 90%, 100% {
+            -webkit-transform: perspective(140px) rotateY(180deg);
+                    transform: perspective(140px) rotateY(180deg);
+            opacity: 0; 
+        }
+    }
+    .blur-page {
+        height: 95vh;
+        width: 100vh;
+        background-color: black;
+        position: absolute;
+    }
 </style>
 <body onload="scroll()">
+    <div class="blur-page">
+    <div class="sk-folding-cube">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    </div>
+    </div>
     <div class="par-card">
         <div class="chat-card">
             <div class="head-sec" id="changeable">
@@ -133,7 +255,12 @@
                     </div>
                 </div>
                 <div>
-                    <button style="background-color: transparent;border: none;"><i class="fa-solid fa-ellipsis-vertical option"></i></button>
+                    <button style="background-color: transparent;border: none;" onclick="handleOption()"><i class="fa-solid fa-ellipsis-vertical option"></i></button>
+                </div>
+            </div>
+            <div class="option-content" id="option-div">
+                <div class="option-selection">
+                    <div><a  style="text-decoration: none;color: white;" onclick="clearchat()"><i class="fa-solid fa-broom"></i>&nbsp;Clear Data</a></div>
                 </div>
             </div>
            <div class="scroll-con" id="sc-down">
@@ -194,6 +321,8 @@
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+      document.getElementById("option-div").style.display = "none"
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -253,11 +382,34 @@
             data: { tid: id, },
             success: function (data) {
                 $("#conversation").html(data);
-                console.log(data);
+                // console.log(data);
             }
         });
     };
 
-    viewChat()
-    setInterval(viewChat,800)
+    // viewChat()
+    // setInterval(viewChat,800)
+
+    function handleOption() {
+        let Check = document.getElementById('option-div')
+        if(Check.style.display === "none" )
+        document.getElementById("option-div").style.display = "block"
+        else
+        document.getElementById("option-div").style.display = "none"
+
+    }
+
+    function clearchat() {
+        var id = document.getElementById("txt_id").value
+        var ur = "{% url 'webuser:clearchat' %}"
+        $.ajax({
+            url: ur,
+            data: { tid: id, },
+            success: function (data) {
+                // console.log(data);
+                alert(data)
+                location.reload()
+            }
+        });
+    };
 </script>

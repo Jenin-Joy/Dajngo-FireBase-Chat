@@ -69,3 +69,13 @@ def deleteaccount(request):
         ct.reference.delete()
     db.collection("tbl_user").document(request.session["uid"]).delete()
     return render(request,"Guest/Login.html",{"msg":"Account Deleted Sucerssfully...."})
+
+def clearchat(request):
+    toid = request.GET.get("tid")
+    chat_data1 = db.collection("tbl_chat").where("user_from", "==", request.session["uid"]).where("user_to", "==", request.GET.get("tid")).stream()
+    for i1 in chat_data1:
+        i1.reference.delete()
+    chat_data2 = db.collection("tbl_chat").where("user_to", "==", request.session["uid"]).where("user_from", "==", request.GET.get("tid")).stream()
+    for i2 in chat_data2:
+        i2.reference.delete()
+    return render(request,"User/ClearChat.html",{"msg":"Chat Cleared Sucessfully....."})

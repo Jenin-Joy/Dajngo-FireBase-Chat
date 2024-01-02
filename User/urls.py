@@ -7,4 +7,5 @@ urlpatterns = [
     path('ajaxchat/',views.ajaxchat,name="ajaxchat"),
     path('ajaxchatview/',views.ajaxchatview,name="ajaxchatview"),
     path('deleteaccount/',views.deleteaccount,name="deleteaccount"),
+    path('clearchat/',views.clearchat,name="clearchat"),
 ]
