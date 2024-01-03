@@ -227,14 +227,15 @@
         }
     }
     .blur-page {
-        height: 95vh;
-        width: 100vh;
-        background-color: black;
+        margin-top: -10px;
+        height: 100%;
+        width: 99%;
+        background-color: rgba(255, 255, 255, 0.729);
         position: absolute;
     }
 </style>
 <body onload="scroll()">
-    <div class="blur-page">
+    <div class="blur-page" id="b-page">
     <div class="sk-folding-cube">
         <div class="sk-cube1 sk-cube"></div>
         <div class="sk-cube2 sk-cube"></div>
@@ -260,7 +261,7 @@
             </div>
             <div class="option-content" id="option-div">
                 <div class="option-selection">
-                    <div><a  style="text-decoration: none;color: white;" onclick="clearchat()"><i class="fa-solid fa-broom"></i>&nbsp;Clear Data</a></div>
+                    <div><a  style="text-decoration: none;color: white;" onclick="clearchat()"><i class="fa-solid fa-broom"></i>&nbsp;Clear Chat</a></div>
                 </div>
             </div>
            <div class="scroll-con" id="sc-down">
@@ -312,7 +313,7 @@
                     <i class="fa fa-paperclip ic-size"></i>
                 </label>
                 <input type="file" name="photo_data" id="photo_data" style="display: none;" onchange="sendChat('{{tid}}')">
-                <input type="text" name="txt_msg" class="message-box" id="txt_msg" placeholder="Type your message..." autocomplete="off">
+                <input type="text" name="txt_msg" class="message-box" id="txt_msg" placeholder="Type your message..." autocomplete="off" required="required">
                 <button class="btn" type="submit" onclick="sendChat('{{tid}}')"><i class="fas fa-paper-plane ic-size"></i></button>
             </div>
         </div>
@@ -322,6 +323,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
       document.getElementById("option-div").style.display = "none"
+      document.getElementById("b-page").style.display = "none"
 
     function getCookie(name) {
         var cookieValue = null;
@@ -345,27 +347,30 @@
         var fileInput = document.getElementById("photo_data");
         var file = fileInput.files[0];
         var fd = new FormData()
-        fd.append("file",file)
-        fd.append("tid",tid)
-        fd.append("msg",msg)
-        var ur = "{% url 'webuser:ajaxchat' %}"
-        var csrftoken = getCookie('csrftoken');
-        $.ajax({
-            type:'POST',
-            url: ur,
-            data: fd,
-            processData: false,
-            contentType: false,
-            headers: { "X-CSRFToken": csrftoken }, // Include CSRF token in headers
-            success: function (data) {
-                   // $("#selplace").html(data);
-                document.getElementById('txt_msg').value = "" 
-                document.getElementById("photo_data").value = ""
-                $('#sc-down').animate({scrollTop: $('#sc-down')[0].scrollHeight});
-                var element = document.getElementById("sc-down");
-                element.scrollTop = element.scrollHeight - element.clientHeight;
-            },
-        });
+        if (msg != "")
+        {
+            fd.append("file",file)
+            fd.append("tid",tid)
+            fd.append("msg",msg)
+            var ur = "{% url 'webuser:ajaxchat' %}"
+            var csrftoken = getCookie('csrftoken');
+            $.ajax({
+                type:'POST',
+                url: ur,
+                data: fd,
+                processData: false,
+                contentType: false,
+                headers: { "X-CSRFToken": csrftoken }, // Include CSRF token in headers
+                success: function (data) {
+                    // $("#selplace").html(data);
+                    document.getElementById('txt_msg').value = "" 
+                    document.getElementById("photo_data").value = ""
+                    $('#sc-down').animate({scrollTop: $('#sc-down')[0].scrollHeight});
+                    var element = document.getElementById("sc-down");
+                    element.scrollTop = element.scrollHeight - element.clientHeight;
+                },
+            });
+        }
     };
 
     function scroll(){
@@ -387,8 +392,8 @@
         });
     };
 
-    // viewChat()
-    // setInterval(viewChat,800)
+    viewChat()
+    setInterval(viewChat,800)
 
     function handleOption() {
         let Check = document.getElementById('option-div')
@@ -402,11 +407,13 @@
     function clearchat() {
         var id = document.getElementById("txt_id").value
         var ur = "{% url 'webuser:clearchat' %}"
+        document.getElementById("b-page").style.display = "block"
         $.ajax({
             url: ur,
             data: { tid: id, },
             success: function (data) {
                 // console.log(data);
+                document.getElementById("b-page").style.display = "none"
                 alert(data)
                 location.reload()
             }
